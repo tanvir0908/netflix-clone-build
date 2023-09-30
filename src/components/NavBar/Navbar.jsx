@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
+import avatar from "../../assets/avatar.png";
 
 export default function Navbar() {
+  const [showNav, setShowNav] = useState(false);
+
+  const transitionNavBar = () => {
+    if (window.scrollY > 100) {
+      setShowNav(true);
+    } else {
+      setShowNav(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", transitionNavBar);
+    return () => window.removeEventListener("scroll", transitionNavBar);
+  }, []);
+
   return (
-    <div className="nav">
-      <div className="nav-container flex justify-between">
+    <div className={`nav ${showNav && "nav-black"}`}>
+      <div className="nav-container flex justify-between items-center">
         <img
           className="nav-logo"
-          src="https://images.ctfassets.net/y2ske730sjqp/1aONibCke6niZhgPxuiilC/2c401b05a07288746ddf3bd3943fbc76/BrandAssets_Logos_01-Wordmark.jpg?w=940"
+          src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c529.png"
           alt=""
         />
-        <img
-          className="nav-avatar"
-          src="https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg"
-          alt=""
-        />
+        <img className="nav-avatar" src={avatar} alt="" />
       </div>
     </div>
   );
